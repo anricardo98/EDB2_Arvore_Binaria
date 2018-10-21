@@ -16,9 +16,14 @@ int main (){
 	tree.insercao(6, 3);
 	tree.insercao(7, 3);
 	tree.insercao(8, 4);
-	tree.insercao(9, 4);
-	tree.insercao(10, 5);
-	tree.insercao(11, 5);
+	tree.insercao(9, 6);
+	tree.insercao(10, 7);
+	tree.insercao(11, 7);
+	tree.insercao(14, 8);
+	tree.insercao(19, 8);
+	tree.insercao(20, 8);
+	tree.insercao(116, 11);
+
 	tree.insercao(13, 1);
 
 	cout << "A arvore tem: " << tree.getElementos() << " elementos" << endl;
@@ -35,7 +40,8 @@ int main (){
 	tree.busca(6);
 	tree.busca(13);
 
-	tree.remocao(3);
+	tree.remocao(2);
+	tree.remocao(116);
 
 	tree.busca(3);
 
@@ -46,6 +52,7 @@ int main (){
 	tree.insercao(22, 13);
 	tree.insercao(23, 13);
 	tree.insercao(15, 15);
+	tree.insercao(222, 22);
 
 	cout << "A arvore tem: " << tree.getElementos() << " elementos" << endl;
 

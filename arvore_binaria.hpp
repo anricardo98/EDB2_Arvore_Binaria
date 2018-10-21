@@ -19,7 +19,7 @@ public:
 	~Arvore_B();
         int getElementos();
 
-	//void insercao (int elemento);
+	//processo de insercao
 	void insercao (int elemento, int pai);
 	int busca_pai (int elemento_, int indice);
 
@@ -61,23 +61,6 @@ int Arvore_B::getElementos(){
     return elementos;
 }
 
-/*
-void Arvore_B::insercao (int elemento){
-
-
-    for (unsigned int i = 0; i < arvore.size(); i++){
-        if (arvore[i] == NULO){
-            arvore[i] = elemento;
-            return;
-        }
-}
-
-
-    arvore.push_back(elemento);
-}*/
-
-
-
 void Arvore_B::insercao(int elemento, int pai){
 
 	int indice_pai = busca_pai(pai, 0);
@@ -94,17 +77,11 @@ void Arvore_B::insercao(int elemento, int pai){
 
 		int tamanho_ant = int (arvore.size());
 
-		int niveis = int (sqrt(arvore.size()+1));
+		int acrescentar = tamanho_ant + 1;
 
-		int tamanho_novo = int (pow(2, niveis+1) - 1);
-
-		int diferenca = tamanho_novo - tamanho_ant;
-
-		for (int i = 0; i < diferenca; i++){
+		for (int i = 0; i < acrescentar; i++){
 			arvore.push_back(NULO);
 		}
-
-		
 	}
 
 	if (arvore[filho_esquerdo] == NULO){
@@ -118,38 +95,42 @@ void Arvore_B::insercao(int elemento, int pai){
 	} else {
 
 		cout << "No preenchido: " << pai << endl;
+		cout << "Filho esquerdo: " << arvore[filho_esquerdo] << endl;
+		cout << "Filho esquerdo: " << arvore[filho_direito] << endl;
 	}
-    
+
 }
 
-int Arvore_B::busca_pai(int elemento_, int indice){
-	
-	int aux = NULO;
+int Arvore_B::busca_pai(int elemento_, int indice_){
 
-	if (arvore[indice] == elemento_){
+	int aux;
+	int tamanho = int (arvore.size());
+	int filho_esquerdo = (2 * indice_) + 1;
+	int filho_direito = (2 * indice_) + 2;
 
-		return indice; 
+	if (arvore[indice_] == elemento_ ){
+
+        return indice_;
+
+	} else {
+
+        aux = NULO;
+
 	}
 
-	int filho_direito = (2 * indice) + 2;
-	int filho_esquerdo = (2 * indice) + 1;
+    if (arvore[filho_esquerdo] != NULO && filho_esquerdo < tamanho){
+        aux = busca_pai(elemento_, filho_esquerdo);
 
+        if (aux != NULO){
+            return aux;
+        }
+    }
 
-	if (filho_esquerdo <= int (arvore.size()) && arvore[filho_esquerdo] != NULO && aux == NULO){
-		aux = busca_pai(elemento_, filho_esquerdo);
-		return aux;
-	}
+    if (arvore[filho_direito] != NULO && filho_direito < tamanho){
+        aux = busca_pai(elemento_, filho_direito);
+    }
 
-	if (filho_direito <= int (arvore.size()) && arvore[filho_direito] != NULO && aux == NULO){
-		
-		aux = busca_pai(elemento_, filho_direito);
-		return aux;
-
-	} 
-
-	return aux;
-
-
+    return aux;
 }
 
 
@@ -158,19 +139,19 @@ void Arvore_B::remocao(int elemento){
 	int aux = remocao_(elemento, 0);
 
 	if (aux == 0){
-		cout << "Nao e possivel remover este elemento" << endl;
+		cout << "Nao e possivel remover este elemento:" << elemento << endl;
 	}
 }
 
 int Arvore_B::remocao_(int elemento, int indice){
-	
+
 	int aux = 0;
-	
+
 	int filho_esquerdo = (2 * indice) + 1;
 	int filho_direito = (2 * indice) + 2;
-	
+
 	if (arvore[indice] == elemento){
-					
+
 		if (filho_esquerdo < int (arvore.size()) && arvore[filho_esquerdo] != NULO){
 			remocao_filhos(filho_esquerdo);
 		}
@@ -185,11 +166,11 @@ int Arvore_B::remocao_(int elemento, int indice){
 	}
 
 
-	if (filho_esquerdo < int (arvore.size()) && arvore[filho_esquerdo] != NULO ){
+	if (filho_esquerdo < int (arvore.size()) && arvore[filho_esquerdo] != NULO && aux == 0){
 		aux = remocao_(elemento, filho_esquerdo);
 	}
 
-	if (filho_direito < int (arvore.size()) && arvore[filho_direito] != NULO){
+	if (filho_direito < int (arvore.size()) && arvore[filho_direito] != NULO && aux == 0){
 		aux = remocao_(elemento, filho_direito);
 	}
 
@@ -198,7 +179,7 @@ int Arvore_B::remocao_(int elemento, int indice){
 }
 
 void Arvore_B::remocao_filhos(int indice){
-	
+
 	int filho_esquerdo = (2 * indice) + 1;
 	int filho_direito = (2 * indice) + 2;
 
@@ -283,12 +264,12 @@ void Arvore_B::busca (int elemento){
 }
 
 int Arvore_B::busca_ (int elemento, int indice){
-	
+
 	int aux = 0;
 	if (arvore[indice] == elemento){
-		
+
 		cout << "O elemento esta presente na lista" << endl;
-		return 1; 
+		return 1;
 	}
 
 	int filho_direito = (2 * indice) + 2;
